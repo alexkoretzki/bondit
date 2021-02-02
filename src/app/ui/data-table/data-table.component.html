@@ -1,0 +1,29 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th *ngIf="tblConfig.containCheckbox"></th>
+      <th *ngFor="let item of tblConfig.columns">
+        {{ item.val }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let val of data; let i = index; trackBy: trackByIndex"
+      #rows
+      (click)="rowSelected($event, val.data, i)"
+    >
+      <td *ngIf="tblConfig.containCheckbox">
+        <input
+          (change)="checkboxEvent($event, val.data)"
+          type="checkbox"
+          class="form-check-input"
+          [checked]="val.isChecked"
+        />
+      </td>
+      <td *ngFor="let item of val.data | keyvalue; let j = index">
+        {{ getValue(val.data, j) }}
+      </td>
+    </tr>
+  </tbody>
+</table>

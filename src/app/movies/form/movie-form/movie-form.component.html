@@ -1,0 +1,56 @@
+<form [formGroup]="movieForm" (ngSubmit)="onSubmit($event)">
+  <div></div>
+  <div class="form-group">
+    <label for="id">Id</label>
+    <input
+      type="text"
+      class="form-control"
+      formControlName="id"
+      id="id"
+      readOnly
+    />
+  </div>
+  <div class="form-group">
+    <label for="movieName">Movie Name</label>
+    <input
+      type="text"
+      class="form-control"
+      formControlName="movieName"
+      id="movieName"
+    />
+  </div>
+  <div class="row">
+    <div class="col-10">
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="price"
+          id="price"
+        />
+      </div>
+    </div>
+    <div class="col-2" style="position: relative">
+      <span style="position: absolute; bottom: 7px">$</span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="category">Category</label>
+    <input
+      type="text"
+      class="form-control"
+      formControlName="category"
+      id="category"
+    />
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea
+      class="form-control"
+      formControlName="description"
+      id="description"
+    ></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
