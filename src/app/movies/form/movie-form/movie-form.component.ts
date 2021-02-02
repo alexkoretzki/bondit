@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Guid } from 'src/app/core/guid/guid.class';
 import { IMovie } from '../../interfaces/movie.interface';
 
@@ -18,11 +18,12 @@ export class MovieFormComponent implements OnInit {
   ngOnInit(): void {
     this.movieForm = this.fb.group({
       id: ['', []],
-      movieName: ['', []],
-      price: ['', []],
+      movieName: ['', [Validators.required, Validators.maxLength(10)]],
+      price: ['', [Validators.required, Validators.maxLength(10)]],
       rate: ['', []],
+      active: ['', []],
       category: ['', []],
-      description: ['', []],
+      description: ['', [Validators.maxLength(100)]],
     });
     this.movieForm.controls['rate'].setValue('16');
     if (this.movie) this.populateFormForEdit();
@@ -37,6 +38,7 @@ export class MovieFormComponent implements OnInit {
       description: this.movieForm.controls['description'].value,
       rate: this.movieForm.controls['rate'].value,
       archived: this.movie?.archived ? true : false,
+      active: this.movieForm.controls['active'].value,
     };
     this.saveBtnClick.emit(movie);
   }
@@ -45,5 +47,8 @@ export class MovieFormComponent implements OnInit {
   }
   changeRate(e) {
     this.movieForm.controls['rate'].setValue(e.target.value);
+  }
+  checkboxEvent(e): void {
+    this.movieForm.controls['active'].setValue(e.target.checked);
   }
 }

@@ -20,7 +20,11 @@ export class MoviesService {
   }
 
   getAll(): Observable<IMovie[]> {
-    return this.moviesSubject.asObservable();
+    return this.moviesSubject.asObservable().pipe(
+      map((movies: IMovie[]) => {
+        return movies.filter((movie) => movie.active);
+      })
+    );
   }
   getMovie(id: string): IMovie {
     const movieArr = this.movies.filter((movie) => movie.id === id);

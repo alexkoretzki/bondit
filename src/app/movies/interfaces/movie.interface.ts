@@ -6,4 +6,5 @@ export interface IMovie {
   price: number;
   rate: string;
   archived: boolean;
+  active: boolean;
 }
