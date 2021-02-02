@@ -1,7 +1,8 @@
 import { getAllLifecycleHooks } from '@angular/compiler/src/lifecycle_reflector';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { DataTableComponent } from 'src/app/ui/data-table/data-table.component';
 import { ITableItem } from 'src/app/ui/data-table/interfaces/item.interface';
 import { ITableConfig } from 'src/app/ui/data-table/interfaces/table.config';
 import { IMovie } from '../interfaces/movie.interface';
@@ -13,6 +14,7 @@ import { MoviesService } from '../services/movies.service';
   styleUrls: ['./active-movies.component.scss'],
 })
 export class ActiveMoviesComponent implements OnInit {
+  @ViewChild(DataTableComponent) table: DataTableComponent;
   tblConfig: ITableConfig = {
     columns: [
       {
@@ -44,9 +46,6 @@ export class ActiveMoviesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.moviesService.moviesObs().subscribe((movies: IMovie[]): void => {
-    //   this.movies = movies;
-    // });
     this.moviesService.getAll().subscribe((movies: IMovie[]): void => {
       this.movies = movies.map((movie) => {
         return {
@@ -55,10 +54,13 @@ export class ActiveMoviesComponent implements OnInit {
         };
       });
     });
+    this.moviesService.clearTableSelections.asObservable().subscribe(() => {
+      this.table.clearSelections();
+    });
   }
 
   addMovie(): void {
-    // clear table selections
+    this.table.clearSelections();
     this.router.navigate(['create'], { relativeTo: this.route });
   }
   movieSelected(movie: IMovie): void {

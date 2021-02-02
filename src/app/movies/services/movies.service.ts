@@ -8,6 +8,7 @@ import { IMovie } from '../interfaces/movie.interface';
 })
 export class MoviesService {
   private movies: IMovie[] = [];
+  public clearTableSelections: Subject<any> = new Subject();
   private moviesSubject: BehaviorSubject<IMovie[]> = new BehaviorSubject<
     IMovie[]
   >(this.movies);
@@ -15,6 +16,7 @@ export class MoviesService {
   addMovie(movie: IMovie): void {
     this.movies.push(movie);
     this.moviesSubject.next(this.movies);
+    this.clearTableSelections.next();
   }
 
   getAll(): Observable<IMovie[]> {
@@ -29,6 +31,7 @@ export class MoviesService {
     const index = this.movies.findIndex((movie) => movie.id === id);
     this.movies[index] = movie;
     this.moviesSubject.next(this.movies);
+    this.clearTableSelections.next();
   }
   getArchivedMovies(): Observable<IMovie[]> {
     return this.moviesSubject.asObservable().pipe(

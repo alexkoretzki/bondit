@@ -36,6 +36,17 @@
     </div>
   </div>
   <div class="form-group">
+    <label for="rate">Rate</label>
+    <select
+      class="form-control"
+      formControlName="rate"
+      (change)="changeRate($event)"
+    >
+      <option value="16" selected="selected">16+</option>
+      <option value="17">17+</option>
+    </select>
+  </div>
+  <div class="form-group">
     <label for="category">Category</label>
     <input
       type="text"

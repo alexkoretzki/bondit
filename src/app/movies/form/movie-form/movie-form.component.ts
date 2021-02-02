@@ -20,9 +20,11 @@ export class MovieFormComponent implements OnInit {
       id: ['', []],
       movieName: ['', []],
       price: ['', []],
+      rate: ['', []],
       category: ['', []],
       description: ['', []],
     });
+    this.movieForm.controls['rate'].setValue('16');
     if (this.movie) this.populateFormForEdit();
   }
   onSubmit(e): void {
@@ -33,11 +35,15 @@ export class MovieFormComponent implements OnInit {
       category: this.movieForm.controls['category'].value,
       price: this.movieForm.controls['price'].value,
       description: this.movieForm.controls['description'].value,
+      rate: this.movieForm.controls['rate'].value,
       archived: this.movie?.archived ? true : false,
     };
     this.saveBtnClick.emit(movie);
   }
   private populateFormForEdit(): void {
     this.movieForm.patchValue(this.movie);
+  }
+  changeRate(e) {
+    this.movieForm.controls['rate'].setValue(e.target.value);
   }
 }

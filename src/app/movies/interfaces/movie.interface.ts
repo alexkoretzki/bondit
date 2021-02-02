@@ -4,5 +4,6 @@ export interface IMovie {
   id: string;
   movieName: string;
   price: number;
+  rate: string;
   archived: boolean;
 }

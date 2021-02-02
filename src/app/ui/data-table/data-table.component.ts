@@ -3,9 +3,12 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   QueryList,
+  SimpleChanges,
   ViewChildren,
 } from '@angular/core';
 import { ITableItem } from './interfaces/item.interface';
@@ -61,5 +64,11 @@ export class DataTableComponent implements OnInit {
   }
   private removeClass(index, cssClass: string): void {
     this.rows.toArray()[index].nativeElement.classList.remove(cssClass);
+  }
+  clearSelections(): void {
+    this.rows.forEach((row) => {
+      if (row.nativeElement.classList.contains('table-active'))
+        row.nativeElement.classList.remove('table-active');
+    });
   }
 }
